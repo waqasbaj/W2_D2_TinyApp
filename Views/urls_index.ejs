@@ -3,14 +3,18 @@
 <head>
   <title>TinyApp</title>
 </head>
+
+<header>
+    <%- include ./partials/_header %>
+</header>
 <body>
-    <main>
+<main>
     <div class="jumbotron">
         <h1>This is a list of URLs shortened</h1>
         <h2>Loop</h2>
         <ul>
-        <% for (url in temlateVars) { %>
-        <li><%= url%> - <%= temlateVars[url]%></li>
+        <% for (url in templateVars) { %>
+        <li><%= url%> - <%= templateVars[url]%></li>
         <% }; %>
         </ul>
     </div>

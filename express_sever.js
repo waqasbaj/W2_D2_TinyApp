@@ -14,19 +14,19 @@ app.get("/", (req, res) => {
 });
 
 app.get("/urls", (req, res) => {
-  let temlateVars =
+  let templateVars =
   { urls : "My link",
     url1 : "www.google.ca"};
-  res.render("urls_index", {temlateVars : temlateVars});
+  res.render("urls_index", {templateVars : templateVars});
 });
 
-app.get("/urls.json", (req, res) => {
-  res.json(urlDatabase);
+app.get("/urls/:id", (req, res) => {
+  let templateVars =
+  { shortURL : req.params.id};
+  res.render("urls_show");
 });
 
-app.get("/hello", (req, res) => {
-  res.end("<html><body>Hello <b>World</b></body></html>\n");
-});
+
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
