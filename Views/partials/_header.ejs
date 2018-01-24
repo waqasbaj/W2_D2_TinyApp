@@ -1,3 +1,24 @@
 <!-- views/partials/head.ejs -->
-<meta charset="UTF-8">
 <title>Header Title</title>
+
+
+
+
+</head>Logged in as: <%= templateVars.username%></head>
+
+
+<ul>
+        <% if (templateVars.username === "Not Signed in") { %>
+        <form method="POST" action="/login">
+
+              <label>Enter Username:</label>
+              <input type="text" name="username">
+              <button type="submit">Submit</button>
+
+        </form>
+        <% } else { %>
+          <form method="POST" action="/logout"><input type="submit" value="Logout"
+      name="Logout" id="Logout" /></form>
+        <% }; %>
+
+</ul>

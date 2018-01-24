@@ -5,15 +5,15 @@
 </head>
 
 <header>
-    <%- include ./partials/_header %>
+    <% include ./partials/_header %>
 </header>
 <body>
 <main>
     <div class="jumbotron">
         <h1>This is a list of URLs shortened</h1>
         <ul>
-        <% for (url in templateVars) { %>
-        <li><%= url%> - <%= templateVars[url]%>
+        <% for (url in urlDatabase) { %>
+        <li><%= url%> - <%= urlDatabase[url]%>
           <form method="POST" action="/urls/<%= url%>/delete"><input type="submit" value="Delete"
       name="Delete" id="delete" /></form>
       <form method="GET" action="/urls/<%=url%>>"><button type="submit">Edit</button></form>
