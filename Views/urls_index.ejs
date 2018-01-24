@@ -11,15 +11,13 @@
 <main>
     <div class="jumbotron">
         <h1>This is a list of URLs shortened</h1>
-
-        <h2>Loop</h2>
         <ul>
         <% for (url in templateVars) { %>
         <li><%= url%> - <%= templateVars[url]%>
-          <form method="POST" action="/urls/9sm5xK/delete"><input type="submit" value="Delete"
+          <form method="POST" action="/urls/<%= url%>/delete"><input type="submit" value="Delete"
       name="Delete" id="delete" /></form>
-        <% }; %>
-
+      <form method="GET" action="/urls/<%=url%>>"><button type="submit">Edit</button></form>
+        <% }; %></li>
         </ul>
     </div>
 </main>

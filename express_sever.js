@@ -1,6 +1,6 @@
 var express = require("express");
 var app = express();
-var PORT = process.env.PORT || 8080; // default port 8080
+var PORT = process.env.PORT || 3000; // default port 8080
 
 app.set("view engine", "ejs");
 
@@ -38,31 +38,45 @@ app.get("/urls/new", (req, res) => {
 
 app.get("/urls/:id", (req, res) => {
   // var templateVars = { shortURL : req.params.id };
-  res.render("urls_show");
+  console.log(req.params.id);
+
+  let id = req.params.id;
+  res.render("urls_show", {id : id});
 });
 
 
 
 app.post("/urls", (req, res) => {
-  console.log(req.body);  // debug statement to see POST parameters
+  console.log(req.body);
   let output = generateRandomString();
   urlDatabase[output] = req.body.longURL;
   // res.send("http://localhost:8080/urls/" + output);
-  console.log(urlDatabase[output]);
-  res.redirect("/urls/" + output);        // Respond with 'Ok' (we will replace this)
+  console.log(urlDatabase);
+  res.redirect("/urls/" + output);
 });
 
 app.get("/u/:shortURL", (req, res) => {
   // let longURL =...
   let shortURL= req.params.shortURL;
-  let longURL= urlDatabase[shortURL];
+  let longURL = urlDatabase[shortURL];
   res.redirect(longURL);
 });
 
 app.post("/urls/:id/delete", (req, res) => {
   let deleteItem = req.params.id;
   delete urlDatabase[deleteItem];
+  console.log(urlDatabase);
   res.redirect("/urls");
+});
+
+app.post("/urls/:id", (req, res) => {
+
+  let updateItem = req.params.id;
+  console.log(req.body.updateURL);
+  urlDatabase[updateItem] = req.body.updateURL;
+  res.redirect("/urls");
+  console.log(urlDatabase);
+
 });
 
 app.listen(PORT, () => {
