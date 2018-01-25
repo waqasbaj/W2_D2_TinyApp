@@ -1,6 +1,8 @@
 var express = require("express");
 var app = express();
 var cookieParser = require('cookie-parser');
+const bodyParser = require("body-parser");
+var morgan = require("morgan");
 
 var PORT = process.env.PORT || 8080; // default port 8080
 
@@ -28,9 +30,9 @@ function generateRandomString() {
     return chars.substring(0, 6);
 };
 
-const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
+app.use(morgan('dev'));
 
 var urlDatabase = { "b2xVn2": "http://www.lighthouselabs.ca",
                     "9sm5xK": "http://www.google.com"};
@@ -67,6 +69,9 @@ app.get("/urls/new", (req, res) => {
   if(req.cookies.user_id !== undefined)
   {
      templateVars = users[req.cookies.user_id];
+  }
+  else{
+    res.redirect("/login");
   }
 
   res.render("urls_new", {newUser : templateVars});
@@ -134,7 +139,7 @@ app.post("/login", (req, res) => {
     {
       console.log("Post Login: User Object:", users[user].email , "Post Login: User input:",req.body.email);
 
-        if (users[user].password === req.body.password)
+        if (users[user].password == req.body.password)
         {
            res.cookie("user_id", users[user].id);
 
