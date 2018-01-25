@@ -4,21 +4,19 @@
 
 
 
-</head>Logged in as: <%= templateVars.username%></head>
+</head>Logged in as: <%= newUser.id%></head>
 
 
 <ul>
-        <% if (templateVars.username === "Not Signed in") { %>
-        <form method="POST" action="/login">
+        <% if (newUser.id !== "Not Signed in") { %>
 
-              <label>Enter Username:</label>
-              <input type="text" name="username">
-              <button type="submit">Submit</button>
-
-        </form>
-        <% } else { %>
           <form method="POST" action="/logout"><input type="submit" value="Logout"
       name="Logout" id="Logout" /></form>
         <% }; %>
 
 </ul>
+
+<form method="GET" action="/register"><button type="submit">Register</button></form>
+
+</br>
+<form method="GET" action="/login"><button type="submit">Login</button></form>

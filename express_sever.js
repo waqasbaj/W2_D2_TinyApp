@@ -36,7 +36,7 @@ var urlDatabase = { "b2xVn2": "http://www.lighthouselabs.ca",
                     "9sm5xK": "http://www.google.com"};
 
 
-var templateVars = { username: "Not Signed in"};
+var templateVars = { id: "Not Signed in"};
 
 
 
@@ -47,24 +47,29 @@ app.get("/", (req, res) => {
 
 app.get("/urls", (req, res) => {
 
-  if(req.cookies.username)
+  console.log("before get urls:", users);
+
+  if(req.cookies.user_id !== undefined)
   {
-     templateVars.username = req.cookies.username;
+     templateVars = users[req.cookies.user_id];
   }
 
-  res.render("urls_index", {urlDatabase : urlDatabase, templateVars : templateVars});
+  console.log("after get urls:", users);
+
+
+  res.render("urls_index", {urlDatabase : urlDatabase, newUser : templateVars});
 
 });
 
 app.get("/urls/new", (req, res) => {
 
 
-  if(req.cookies.username)
+  if(req.cookies.user_id !== undefined)
   {
-     templateVars.username = req.cookies.username;
+     templateVars = users[req.cookies.user_id];
   }
 
-  res.render("urls_new", {templateVars : templateVars});
+  res.render("urls_new", {newUser : templateVars});
 
 });
 
@@ -72,13 +77,13 @@ app.get("/urls/:id", (req, res) => {
   // var templateVars = { shortURL : req.params.id };
   console.log(req.params.id);
 
-  if(req.cookies.username)
+  if(req.cookies.user_id !== undefined)
   {
-     templateVars.username = req.cookies.username;
+     templateVars = users[req.cookies.user_id];
   }
 
   let id = req.params.id;
-  res.render("urls_show", {id : id, templateVars : templateVars});
+  res.render("urls_show", {id : id, newUser: templateVars});
 });
 
 
@@ -118,24 +123,53 @@ app.post("/urls/:id", (req, res) => {
 
 app.post("/login", (req, res) => {
 
+  for(user in users){
 
-  res.cookie("username", req.body.username);
+    console.log("Lets Start");
 
-  console.log(req.cookies);
+    console.log("Post Login: User Object:", users[user].email , "Post Login: User input:",req.body.email);
 
 
-  res.redirect("/urls");
+    if (users[user].email === req.body.email)
+    {
+      console.log("Post Login: User Object:", users[user].email , "Post Login: User input:",req.body.email);
+
+        if (users[user].password === req.body.password)
+        {
+           res.cookie("user_id", users[user].id);
+
+           res.redirect("/");
+
+           return;
+
+        }
+        else
+        {
+          res.status(403).send("Please enter valid password");
+          return;
+        }
+    }
+
+  }
+
+    res.status(403).send("Please enter valid email");
+
+    return;
+
+
 
 });
 
 app.post("/logout", (req, res) => {
 
 
-  res.clearCookie("username");
+  res.clearCookie("user_id");
 
   console.log(req.cookies);
 
-  templateVars.username = "Not Signed in";
+  templateVars= { id: "Not Signed in"};
+
+  console.log("after logout post:", users);
 
 
   res.redirect("/urls");
@@ -144,8 +178,13 @@ app.post("/logout", (req, res) => {
 
 app.get("/register", (req, res) => {
 
+  if(req.cookies.user_id !== undefined)
+  {
+     templateVars = users[req.cookies.user_id];
+  }
 
-  res.render("urls_register", {templateVars : templateVars});
+
+  res.render("urls_register", {newUser: templateVars});
 
 });
 
@@ -156,7 +195,7 @@ app.post("/register", (req, res) => {
 
   if (req.body.email== ''|| req.body.password == '')
   {
-    res.status(403).send("Please enter valid email and password");
+    res.status(400).send("Please enter valid email and password");
 
     return;
 
@@ -164,9 +203,9 @@ app.post("/register", (req, res) => {
 
   for(id in users)
   {
-    if (users[id].email = req.body.email)
+    if (users[id].email === req.body.email)
     {
-      res.status(403).send("Email already exists");
+      res.status(400).send("Email already exists");
 
       return ;
     }
@@ -199,6 +238,20 @@ app.post("/register", (req, res) => {
   res.redirect("/urls");
 
 
+});
+
+app.get("/login", (req, res) => {
+
+
+ if(req.cookies.user_id !== undefined)
+  {
+     templateVars = users[req.cookies.user_id];
+  }
+
+  console.log("after get login:", users);
+
+
+  res.render("urls_login", {newUser: templateVars});
 });
 
 
