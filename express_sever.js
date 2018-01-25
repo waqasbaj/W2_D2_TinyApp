@@ -6,6 +6,17 @@ var PORT = process.env.PORT || 8080; // default port 8080
 
 app.set("view engine", "ejs");
 
+var users = {"userRandomID": {
+    id: "userRandomID",
+    email: "user@example.com",
+    password: "purple-monkey-dinosaur"
+  },
+ "user2RandomID": {
+    id: "user2RandomID",
+    email: "user2@example.com",
+    password: "dishwasher-funk"
+  }};
+
 function generateRandomString() {
     let chars = '';
 
@@ -130,6 +141,67 @@ app.post("/logout", (req, res) => {
   res.redirect("/urls");
 
 });
+
+app.get("/register", (req, res) => {
+
+
+  res.render("urls_register", {templateVars : templateVars});
+
+});
+
+app.post("/register", (req, res) => {
+
+
+  console.log(req.body);
+
+  if (req.body.email== ''|| req.body.password == '')
+  {
+    res.status(403).send("Please enter valid email and password");
+
+    return;
+
+  }
+
+  for(id in users)
+  {
+    if (users[id].email = req.body.email)
+    {
+      res.status(403).send("Email already exists");
+
+      return ;
+    }
+
+
+  }
+
+
+  {
+
+  let randomID = generateRandomString();
+
+  users[randomID] = {};
+
+  users[randomID].id= randomID;
+
+  users[randomID].email= req.body.email;
+
+  users[randomID].password= req.body.password;
+
+  console.log(users);
+
+  res.cookie("user_id", randomID);
+
+  console.log(req.cookies);
+
+  }
+
+
+  res.redirect("/urls");
+
+
+});
+
+
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
