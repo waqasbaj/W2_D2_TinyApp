@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>TinyApp</title>
 </head>
@@ -7,23 +8,28 @@
 <header>
     <% include ./partials/_header %>
 </header>
+
 <body>
 <main>
-    <div class="jumbotron">
-        <h1>This is a list of URLs shortened</h1>
-        <ul>
+
+      <h1>This is a list of URLs shortened</h1>
+
+      <ul>
         <% for (url in urlDatabase) { %>
-        <% if (newUser.id === url) { %>
-        <% for (outUrl in urlDatabase[url].userUrl) { %>
-        <li><%= outUrl%> - <%= urlDatabase[url].userUrl[outUrl]%>
-          <form method="POST" action="/urls/<%= outUrl%>/delete"><input type="submit" value="Delete" name="Delete" id="delete" /></form>
-        <form method="GET" action="/urls/<%=outUrl%>"><button type="submit">Edit</button></form>
-        <% }; %>
-        <% }; %>
+          <% if (newUser.id === url) { %>
+
+            <% for (outUrl in urlDatabase[url].userUrl) { %>
+            <li><%= outUrl%> - <%= urlDatabase[url].userUrl[outUrl]%> - <%= urlDatabase[url].date%>
+            <form method="POST" action="/urls/<%= outUrl%>/delete"><input type="submit" value="Delete" name="Delete" id="delete" /></form>
+            <form method="GET" action="/urls/<%=outUrl%>"><button type="submit">Edit</button></form>
+            <% }; %>
+
+          <% }; %>
         <% }; %></li>
-        </ul>
-         <form method="GET" action="/urls/new"><button type="submit">Add New Link</button></form>
-    </div>
+      </ul>
+
+      <form method="GET" action="/urls/new"><button type="submit">Add New Link</button></form>
+
 </main>
 
 </body>

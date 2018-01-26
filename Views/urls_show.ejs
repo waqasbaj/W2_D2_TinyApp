@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>TinyApp</title>
 </head>
+
 <header>
     <%include ./partials/_header %>
 </header>
+
 <body>
     <main>
-    <div class="jumbotron">
-        <h1>The full URL and its shortened form</h1>
-    <form action="/urls/<%=id%>" method="POST" style="margin:150px;">
-      <label for="updateURL">Enter updated URL:</label>
-      <input id="updateURL" type="text" name="updateURL" placeholder="http://" style="width: 300px">
-      <input type="submit" value="Submit">
-    </form>
-    </div>
-</main>
-
+          <h1>The full URL and its shortened form</h1>
+          <p><%=id%> - <%=long%><p>
+          <form action="/urls/<%=id%>" method="POST" style="margin:5px;">
+          <label for="updateURL">Enter updated URL:</label>
+          <input id="updateURL" type="text" name="updateURL" placeholder="http://" style="width: 300px">
+          <input type="submit" value="Submit">
+          </form>
+    </main>
 </body>
 </html>

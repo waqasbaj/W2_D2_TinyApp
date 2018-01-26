@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>TinyApp</title>
 </head>
@@ -7,27 +8,21 @@
 <header>
     <% include ./partials/_header %>
 </header>
+
 <body>
 <main>
-    <div class="jumbotron">
+        <h1>Please enter email and password for new account Registration</h1>
         <ul>
         <form method="POST" action="/register">
-
-
               <label>Enter email:</label>
               <input type="email" name="email">
-
-            </br>
-
+              </br>
               <label>Enter Password:</label>
               <input type="password" name="password">
-            </br>
+              </br>
               <button type="submit">Submit</button>
-
-
         </form>
         </ul>
-    </div>
 </main>
 
 </body>

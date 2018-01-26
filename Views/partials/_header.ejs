@@ -4,19 +4,22 @@
 
 
 
-</head>Logged in as: <%= newUser.id%></head>
+</head>Logged in as: <%= newUser.email%></head>
 
 
 <ul>
-        <% if (newUser.id !== "Not Signed in") { %>
+        <% if (newUser.email !== "Not Signed in") { %>
 
           <form method="POST" action="/logout"><input type="submit" value="Logout"
       name="Logout" id="Logout" /></form>
-        <% }; %>
+        <% } else { %>
+        <form method="GET" action="/register"><button type="submit">Register</button></form>
+
+        </br>
+        <form method="GET" action="/login"><button type="submit">Login</button></form>
+
+        <%}%>
+
 
 </ul>
 
-<form method="GET" action="/register"><button type="submit">Register</button></form>
-
-</br>
-<form method="GET" action="/login"><button type="submit">Login</button></form>
