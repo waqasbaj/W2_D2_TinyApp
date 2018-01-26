@@ -4,7 +4,12 @@ TinyApp is a full stack web application built with Node and Express that allows 
 
 ## Final Project
 
+!["Snapshot of /login Page"] : (https://github.com/waqasbaj/W2_D2_TinyApp/blob/master/docs/:login%20-%20Login%20Page.png?raw=true)
 
+
+!["Snapshot of main /url Page"] : (https://github.com/waqasbaj/W2_D2_TinyApp/blob/master/docs/:urls%20-%20Main%20URL%20Display%20Page.png?raw=true)
+
+!["Snapshot of url modication Page"] : (https://github.com/waqasbaj/W2_D2_TinyApp/blob/master/docs/:urls:id%20-%20URL%20Modification%20Page.png?raw=true)
 
 
 ## Dependencies
