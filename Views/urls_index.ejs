@@ -20,7 +20,7 @@
 
             <% for (outUrl in urlDatabase[url].userUrl) { %>
             <li><%= outUrl%> - <%= urlDatabase[url].userUrl[outUrl]%> - <%= urlDatabase[url].date%>
-            <form method="POST" action="/urls/<%= outUrl%>/delete"><input type="submit" value="Delete" name="Delete" id="delete" /></form>
+            <form method="POST" action="/urls/<%= outUrl%>?_method=DELETE"><input type="submit" value="Delete"></form>
             <form method="GET" action="/urls/<%=outUrl%>"><button type="submit">Edit</button></form>
             <% }; %>
 

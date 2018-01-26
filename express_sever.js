@@ -5,17 +5,16 @@ var bodyParser = require("body-parser");
 var morgan = require("morgan");
 var bcrypt = require('bcrypt');
 var cookieSession = require('cookie-session');
+var methodOverride = require('method-override');
 
 var PORT = process.env.PORT || 8080; // default port 8080
 
 app.set("view engine", "ejs");
 
+app.use(methodOverride('_method'));
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(cookieParser());
 app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
-app.use(morgan('dev'));
 app.use(cookieSession({
   name: 'session',
   keys: ['key1', 'key2']
@@ -208,18 +207,20 @@ app.post("/urls", (req, res) => {
 });
 
 
-app.post("/urls/:id/delete", (req, res) => {
+app.delete("/urls/:id", (req, res) => {
 
   // When deleting a short URL, the data base will be updated and the user will be redirected to /urls
 
     let deleteItem = req.params.id;
+
+    console.log(req.params.id);
 
     delete urlDatabase[req.session.user_id].userUrl[req.params.id];
 
     res.redirect("/urls");
 });
 
-app.post("/urls/:id", (req, res) => {
+app.put("/urls/:id", (req, res) => {
 
   // When the user updates the eisting URL at /urls/id, the database is updated and the user is redirected to /urls
 
