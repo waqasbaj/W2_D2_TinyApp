@@ -192,6 +192,8 @@ app.post("/urls", (req, res) => {
   //The randomly generated number will be used as ID
   //If the user is not an exsiting user than a new user profile will be created
 
+     req.body.longURL = checkHttp(req.body.longURL);
+
     if (urlDatabase[req.session.user_id] === undefined){
       urlDatabase[req.session.user_id] = {};
       urlDatabase[req.session.user_id].userID = req.session.user_id;
@@ -225,6 +227,8 @@ app.put("/urls/:id", (req, res) => {
   // When the user updates the eisting URL at /urls/id, the database is updated and the user is redirected to /urls
 
     let updateItem = req.params.id;
+
+    req.body.updateURL = checkHttp(req.body.updateURL);
 
     urlDatabase[req.session.user_id].userUrl[req.params.id] = req.body.updateURL;
 
@@ -326,6 +330,21 @@ app.post("/register", (req, res) => {
     res.redirect("/urls");
 
 });
+
+function checkHttp(input){
+
+  var valid = /^(ftp|http|https):\/\/[^ "]+$/.test(input);
+
+  if (valid === true){
+
+  return input;
+
+  }else{
+
+    return ("http://" + input);
+  }
+
+}
 
 
 app.listen(PORT, () => {
